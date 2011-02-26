@@ -1,0 +1,22 @@
+application: ftimeme
+version: 1
+runtime: python
+api_version: 1
+
+builtins:
+- datastore_admin: on
+
+handlers:
+- url: /static
+  static_dir: static
+
+- url: /xd_receiver.htm
+  static_files: static/xd_receiver.html
+  upload: static/xd_receiver.html
+
+- url: /favicon.ico
+  static_files: static/img/favicon.ico
+  upload: static/img/favicon.ico
+
+- url: /.*
+  script: main.py

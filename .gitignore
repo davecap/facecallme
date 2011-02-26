@@ -1,0 +1,24 @@
+*.sqlite
+*.db
+*.pid
+
+*.log
+logs
+logs/*
+
+# csv files
+*.csv
+
+*.pyc
+
+#for vim files
+*.swp
+
+#for emacs files?
+*~
+*.cache
+*#*
+
+#for some other editor?
+*.DS_Store
+
