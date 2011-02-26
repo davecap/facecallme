@@ -48,7 +48,7 @@
                   <p><a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square"/></a></p>
                   <p>Hello, {{ current_user.name|escape }}</p>
                   
-                  <p>Your Facetime Email:<span id="facetime-email" style="{% if not current_user.facetime_email %}display:none;{% endif %}"><span id="facetime-email-text">{{ current_user.facetime_email|escape }}</span>&nbsp;<a href="#" id="update-email">Change</a></span>
+                  <p>Your FaceTime (Apple ID):<span id="facetime-email" style="{% if not current_user.facetime_email %}display:none;{% endif %}"><span id="facetime-email-text">{{ current_user.facetime_email|escape }}</span>&nbsp;<a href="#" id="update-email">Change</a></span>
                       <form action="POST" id="facetime-email-form" style="{% if current_user.facetime_email %}display:none;{% endif %}">
                           <input type="email" name="email" id="email" value="{{ current_user.facetime_email|escape }}" />
                           <input type="submit" id="submit" value="Save" />
@@ -86,6 +86,9 @@
         
         <div class="grid_24">
             {% block footer %}
+                <a href="http://itunes.apple.com/us/app/facetime/id414307850">Get FaceTime for Mac</a>
+                <a href="http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=414307850">Get FaceTime for iPhone</a>
+                <br />
                 Brought to you by Dollop Labs
             {% endblock %}
         </div>
