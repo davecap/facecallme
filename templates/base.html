@@ -38,18 +38,23 @@
     </script>
     
     <div class="container_24">
-        <div class="grid_12">
+        <div class="grid_24" style="text-align:center;">
             <!-- <img src="/static/img/logo.png" /> -->
             Facetime Me Logo<br />
             Facetime Your Facebook Friends!
-        </div>
-        <div class="grid_12" style="text-align:center;">
-            <div style="padding-top:40px;">
+            
+            <div style="margin-top:40px;">
                 {% if current_user %}
                   <p><a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square"/></a></p>
                   <p>Hello, {{ current_user.name|escape }}</p>
                   
-                  <p>Your Facetime Email: <span id="facetime-email-form" style="{% if current_user.facetime_email %}display:none;{% endif %}"><input type="text" name="email" id="email"/><input type="submit" id="submit" /></span><span id="facetime-email" style="{% if not current_user.facetime_email %}display:none;{% endif %}"><span id="facetime-email-text">{{ current_user.facetime_email|escape }}</span>&nbsp;<a href="#" id="update-email">Update</a></span></p>
+                  <p>Your Facetime Email:<span id="facetime-email" style="{% if not current_user.facetime_email %}display:none;{% endif %}"><span id="facetime-email-text">{{ current_user.facetime_email|escape }}</span>&nbsp;<a href="#" id="update-email">Change</a></span>
+                      <form action="POST" id="facetime-email-form" style="{% if current_user.facetime_email %}display:none;{% endif %}">
+                          <input type="email" name="email" id="email" value="{{ current_user.facetime_email|escape }}" />
+                          <input type="submit" id="submit" value="Save" />
+                          &nbsp;<span id="submit-error"></span>
+                      </form>
+                  </p>
                 {% endif %}
                 
                 <fb:login-button autologoutlink="true"></fb:login-button>
@@ -77,6 +82,8 @@
 
         </div>
         
+        <div class="clear"></div>
+        
         <div class="grid_24">
             {% block footer %}
                 Brought to you by Dollop Labs
@@ -90,7 +97,13 @@
   <!-- <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=true"></script>  -->
   
   {% if current_user %}
-      <script type="text/javascript">
+    <script type="text/javascript">
+        function validateEmail(email) 
+        { 
+            var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ 
+            return email.match(re) 
+        }
+      
         $('#update-email').click(function(){
             $('#facetime-email').hide();
             $('#facetime-email-form').show();            
@@ -98,20 +111,23 @@
         
         $('#submit').click(function () {		
             var email = $('input[name=email]');
-            if (email.val()=='') {
+            if (!validateEmail(email.val())) {
+                $('#submit-error').html('Invalid email');
                 return false;
             }
-            
+        
+            $('#submit-error').html('');            
             $('#facetime-email-form').hide();
-                        
+            
             $.getJSON('/ajax/update_email', {email:email.val()}, function(data) {
                 $('#facetime-email-text').html(data.email);
                 $('#facetime-email').show();
+                $('input[name=email]').val(data.email);
             }).error(function() { $('#facetime-email-form').show(); });
-            
-            return true;
+        
+            return false;
         });
-      </script>
+    </script>
   {% endif %}
 
   <!-- <script>
