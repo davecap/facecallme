@@ -38,58 +38,74 @@
     </script>
     
     <div class="container_24">
-        <div class="grid_24" style="text-align:center;">
-            <!-- <img src="/static/img/logo.png" /> -->
-            Facetime Me Logo<br />
-            Facetime Your Facebook Friends!
-            
-            <div style="margin-top:40px;">
-                {% if current_user %}
-                  <p><a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square"/></a></p>
-                  <p>Hello, {{ current_user.name|escape }}</p>
-                  
-                  <p>Your FaceTime (Apple ID):<span id="facetime-email" style="{% if not current_user.facetime_email %}display:none;{% endif %}"><span id="facetime-email-text">{{ current_user.facetime_email|escape }}</span>&nbsp;<a href="#" id="update-email">Change</a></span>
-                      <form action="POST" id="facetime-email-form" style="{% if current_user.facetime_email %}display:none;{% endif %}">
-                          <input type="email" name="email" id="email" value="{{ current_user.facetime_email|escape }}" />
-                          <input type="submit" id="submit" value="Save" />
-                          &nbsp;<span id="submit-error"></span>
-                      </form>
-                  </p>
-                {% endif %}
-                
-                <fb:login-button autologoutlink="true"></fb:login-button>
+        <div class="grid_12" id="header">
+            <div style="text-align:center;">
+                <h1>FACECALL.ME</h1>
             </div>
+            
+            <br />
+            
+            {% if current_user %}
+                <div class="grid_2">
+                    <a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square"/></a>
+                </div>
+                <div class="grid_10">
+                    Hello, {{ current_user.name|escape }}<br />                    
+                    <span id="facetime-email" style="{% if not current_user.facetime_email %}display:none;{% endif %}"><span id="facetime-email-text">{{ current_user.facetime_email|escape }}</span>&nbsp;<a href="#" id="update-email">change</a></span>
+                    <form action="POST" id="facetime-email-form" style="{% if current_user.facetime_email %}display:none;{% endif %}">
+                    <input type="email" name="email" id="email" value="{{ current_user.facetime_email|escape }}" />
+                    <input type="submit" id="submit" value="Save" /><span id="submit-error"></span>
+                    </form>
+                </div>
+            {% else %}
+                <div style="text-align:center;">
+                    <fb:login-button></fb:login-button>
+                </div>
+            {% endif %}
         </div>
         
         <div class="clear"></div>
-        <br />
         
-        <div class="grid_24">
+        <div class="grid_12" style="margin-top:20px;">
             {% if current_user %}
                       {% if facetime_friends %}
-                        <div id="facetime-friend-list">
                             {% for f in facetime_friends %}
                                 {% if f.facetime_email %}
-                                    <div><img src="{{ f.picture }}"/><a href="{{ f.profile_url }}">{{ f.name }}</a>&nbsp;<a href="facetime://{{ f.facetime_email|escape }}">Call {{ f.first_name }}</a></div>
+                                    <div class="grid_2">
+                                        <img src="{{ f.picture }}"/>
+                                    </div>
+                                    <div class="grid_6">
+                                        <a href="{{ f.profile_url }}" style="text-decoration:none;">{{ f.name }}</a>
+                                    </div>
+                                    <div class="grid_4">
+                                        <a href="facetime://{{ f.facetime_email|escape }}">Call {{ f.first_name }}</a>
+                                    </div>
                                 {% endif %}
                             {% endfor %}
-                        </div>
                       {% else %}
                         None of your friends are here... tell them to sign up!
                       {% endif %}
-                    <!-- <input id="add_friends" placeholder="Type a friend's name"/> -->
-            {% endif %}             
-
+            {% endif %}
         </div>
         
         <div class="clear"></div>
         
-        <div class="grid_24">
+        <div class="grid_12" style="margin-top:20px;text-align:center;">
             {% block footer %}
-                <a href="http://itunes.apple.com/us/app/facetime/id414307850">Get FaceTime for Mac</a>
-                <a href="http://phobos.apple.com/WebObjects/MZStore.woa/wa/viewSoftware?id=414307850">Get FaceTime for iPhone</a>
-                <br />
-                Brought to you by Dollop Labs
+                {% if current_user %}
+                        <fb:logout-button></fb:logout-button>
+                {% endif %}
+            
+                <p>
+                    <strong>Don't have FaceTime?</strong>
+                    <br />
+                    You need a mac with Snow Leopard (10.6) or an iPhone 4.
+                    <br />
+                    <a href="http://itunes.apple.com/us/app/facetime/id414307850">Get FaceTime for Mac</a>
+                </p>
+                <br /><br />
+                
+                FaceCall Me is Brought to you by Dollop Labs
             {% endblock %}
         </div>
     </div>
