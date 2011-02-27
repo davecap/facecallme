@@ -98,7 +98,8 @@
     <div class="container_12">
         <div class="grid_12" id="header" style="text-align:center;">
             <h1>FACECALL.ME</h1>
-        </div>    
+        </div>
+        <br /><br />
     </div>
     
     
@@ -131,16 +132,15 @@
                   {% if facetime_friends %}
                         {% for f in facetime_friends %}
                             {% if f.facetime_email %}
-                                <div class="grid_2 alpha">
+                                <div class="grid_3 alpha">
                                     <img src="{{ f.picture }}"/>
                                 </div>
-                                <div class="grid_6">
+                                <div class="grid_5" style="padding-top:16px;">
                                     <a href="{{ f.profile_url }}" style="text-decoration:none;">{{ f.name }}</a>
                                 </div>
-                                <div class="grid_4 omega">
+                                <div class="grid_4 omega" style="padding-top:16px;">
                                     <a class="button green" href="facetime://{{ f.facetime_email|escape }}">Call</a>
                                 </div>
-                                
                                 <div class="clear"></div>
                             {% endif %}
                         {% endfor %}
