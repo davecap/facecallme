@@ -16,6 +16,64 @@
   <link rel="stylesheet" href="/static/css/style.css?v=1">
   <link rel="stylesheet" href="/static/css/960.css?v=1">
   <link rel="stylesheet" href="/static/css/ui-lightness/jquery-ui-1.8.7.custom.css?v=1">
+  
+  <style>
+      body {
+        text-rendering: optimizeLegibility;
+      }
+      
+      a.button {
+          text-decoration:none;
+      }
+      
+      a.button:hover {
+        cursor: pointer;
+      }
+
+      a.button::-moz-focus-inner {
+        border:0;
+      }
+      
+      a.button.green {
+        background: #7fbf4d;
+        background: -moz-linear-gradient(top, #7fbf4d 0%, #63a62f 100%);
+        background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#7fbf4d), to(#63a62f));
+        border: 1px solid #63a62f;
+        border-bottom: 1px solid #5b992b;
+        -moz-border-radius: 3px;
+        -webkit-border-radius: 3px;
+        border-radius: 3px;
+        -moz-box-shadow: inset 0 1px 0 0 #96ca6d;
+        -webkit-box-shadow: inset 0 1px 0 0 #96ca6d;
+        box-shadow: inset 0 1px 0 0 #96ca6d;
+        color: #fff;
+        font-family: "Lucida Grande", "Lucida Sans Unicode", "Lucida Sans", Geneva, Verdana, sans-serif;
+        font-size: 11px;
+        font-weight: bold;
+        line-height: 1;
+        padding: 5px 12px 5px 12px;
+        text-align: center;
+        text-shadow: 0 -1px 0 #4c9021;
+      }
+
+      a.button.green:hover {
+        background: #76b347;
+        background: -moz-linear-gradient(top, #76b347 0%, #5e9e2e 100%);
+        background: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#76b347), to(#5e9e2e));
+        -moz-box-shadow: inset 0 1px 0 0 #8dbf67;
+        -webkit-box-shadow: inset 0 1px 0 0 #8dbf67;
+        box-shadow: inset 0 1px 0 0 #8dbf67;
+        cursor: pointer;
+      }
+
+      a.button.green:active {
+        border: 1px solid #5b992b;
+        border-bottom: 1px solid #538c27;
+        -moz-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eee;
+        -webkit-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eee;
+        box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eee;
+      }
+  </style>
 </head>
 
 <body>
@@ -43,16 +101,17 @@
         </div>    
     </div>
     
-    <div class="clear"></div>
     
-    <div class="container_12">
+    <div class="clear"></div>    
+    
+    <div class="container_12">        
         {% if current_user %}
             <div class="grid_2 alpha">
                 <a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square"/></a>
             </div>
             <div class="grid_10 omega">
                 Hello, {{ current_user.name|escape }}<br />                    
-                <span id="facetime-email" style="{% if not current_user.facetime_email %}display:none;{% endif %}"><span id="facetime-email-text">{{ current_user.facetime_email|escape }}</span>&nbsp;<a href="#" id="update-email">change</a></span>
+                <span id="facetime-email" style="{% if not current_user.facetime_email %}display:none;{% endif %}"><span id="facetime-email-text">{{ current_user.facetime_email|escape }}</span>&nbsp;<a href="#" id="update-email">Change</a></span>
                 <form action="POST" id="facetime-email-form" style="{% if current_user.facetime_email %}display:none;{% endif %}">
                 <input type="email" name="email" id="email" value="{{ current_user.facetime_email|escape }}" />
                 <input type="submit" id="submit" value="Save" /><span id="submit-error"></span>
@@ -79,8 +138,10 @@
                                     <a href="{{ f.profile_url }}" style="text-decoration:none;">{{ f.name }}</a>
                                 </div>
                                 <div class="grid_4 omega">
-                                    <a href="facetime://{{ f.facetime_email|escape }}">Call {{ f.first_name }}</a>
+                                    <a class="button green" href="facetime://{{ f.facetime_email|escape }}">Call</a>
                                 </div>
+                                
+                                <div class="clear"></div>
                             {% endif %}
                         {% endfor %}
                   {% else %}
@@ -92,23 +153,19 @@
     <div class="clear"></div>
     
     <div class="container_12" style="margin-top:20px;">
-        <div class="grid_12" style="margin-top:20px;text-align:center;">
-            {% block footer %}
-                {% if current_user %}
-                        <fb:logout-button></fb:logout-button>
-                {% endif %}
+        <div class="grid_12" style="text-align:center;">
+            {% if current_user %}
+                    <fb:logout-button></fb:logout-button>
+            {% endif %}
+        
+            <br />
             
-                <p>
-                    <strong>Don't have FaceTime?</strong>
-                    <br />
-                    You need a mac with Snow Leopard (10.6) or an iPhone 4.
-                    <br />
-                    <a href="http://itunes.apple.com/us/app/facetime/id414307850">Get FaceTime for Mac</a>
-                </p>
-                <br /><br />
-                
-                FaceCall Me is Brought to you by Dollop Labs
-            {% endblock %}
+            <strong>Don't have FaceTime?</strong> <a href="http://itunes.apple.com/us/app/facetime/id414307850">Get FaceTime for Mac</a><br />
+            <small>You'll need a mac with Snow Leopard (10.6) or an iPhone 4.</small><br />
+        </div>
+        
+        <div class="grid_12" style="margin-top:20px;text-align:center;">
+            FaceCall Me is Brought to you by Dollop Labs
         </div>
     </div>
 
