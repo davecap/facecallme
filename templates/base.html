@@ -73,6 +73,14 @@
         -webkit-box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eee;
         box-shadow: inset 0 0 8px 4px #548c29, 0 1px 0 0 #eee;
       }
+      
+      
+      div.greybox {
+          background-color: #EEE;
+          padding: 15px;
+          border-radius: 15px;
+          -moz-border-radius: 15px;
+      }
   </style>
 </head>
 
@@ -96,79 +104,86 @@
     </script>
     
     <div class="container_12">
-        <div class="grid_12" id="header" style="text-align:center;">
+        <div class="grid_12" id="header" style="margin-top:25px;text-align:center;">
             <h1>FACECALL.ME</h1>
         </div>
-        <br /><br />
-    </div>
-    
-    <div class="clear"></div>
-    
-    <div class="container_12">        
+
+        <div class="clear"></div>
+
         {% if current_user %}
-            <div class="grid_2 alpha">
-                <a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square"/></a>
-            </div>
-            <div class="grid_10 omega">
-                Hello, {{ current_user.name|escape }}<br />                    
-                <span id="facetime-email" style="{% if not current_user.facetime_email %}display:none;{% endif %}">Your FaceTime (Apple ID) is:<span id="facetime-email-text">{{ current_user.facetime_email|escape }}</span>&nbsp;<a href="#" id="update-email">Change</a></span>
-                <form action="POST" id="facetime-email-form" style="{% if current_user.facetime_email %}display:none;{% endif %}">
-                <input type="email" name="email" id="email" value="{{ current_user.facetime_email|escape }}" />
-                <input type="submit" id="submit" value="Save" /><span id="submit-error"></span>
-                </form>
-                <br />
-                <fb:like href="http://www.facecall.me" show_faces="false" width="200"></fb:like>
+            <div class="grid_12" style="margin-top:10px;left:40px;">            
+                <div class="grid_2 alpha">
+                    <a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square"/></a>
+                </div>
+                <div class="grid_10 omega">
+                    Hello, {{ current_user.name|escape }}<br />                    
+                    <small><span id="facetime-email" style="{% if not current_user.facetime_email %}display:none;{% endif %}"><span id="facetime-email-text">{{ current_user.facetime_email|escape }}</span>&nbsp;<a href="#" id="update-email">Change</a></span></small>
+                    <form action="POST" id="facetime-email-form" style="{% if current_user.facetime_email %}display:none;{% endif %}">
+                        <input type="email" name="email" id="email" value="{{ current_user.facetime_email|escape }}" />
+                        <input type="submit" id="submit" value="Save" /><span id="submit-error"></span>
+                    </form>
+                    <br />
+                    <fb:like href="http://www.facecall.me" show_faces="false" width="400"></fb:like>
+                </div>
             </div>
         {% else %}
-            <div style="text-align:center;">
+            <div class="grid_12" style="text-align:center;margin-top:10px;">
                 <fb:login-button autologoutlink="true"></fb:login-button>
             </div>
+            <div class="grid_12" style="margin-top:20px;">
+                <strong>What is Facecall.me?</strong><br />
+                <p style="margin-top:5px;">
+                    Keep track of who has Facetime with Facecall. All you have to do is log in and set your Facetime address. <b>We won't ever send you any emails or give away your personal information!</b>
+                </p>
+
+                <br />
+                <fb:like href="http://www.facecall.me" show_faces="false" width="400"></fb:like>
+            </div>
         {% endif %}
-    </div>
-        
-    <div class="clear"></div>
-    <hr />
-    
-    <div class="container_12" style="margin-top:20px;">
+
+        <div class="clear"></div>
+
         {% if current_user %}
-                  {% if facetime_friends %}
-                        {% for f in facetime_friends %}
-                            {% if f.facetime_email %}
-                                <div class="grid_2 alpha">
-                                    <img src="{{ f.picture }}"/>
-                                </div>
-                                <div class="grid_6" style="padding-top:16px;">
-                                    <a href="{{ f.profile_url }}" style="text-decoration:none;">{{ f.name }}</a>
-                                </div>
-                                <div class="grid_4 omega" style="padding-top:16px;">
-                                    <a class="button green" href="facetime://{{ f.facetime_email|escape }}">Call</a>
-                                </div>
-                                <div class="clear"></div>
-                            {% endif %}
-                        {% endfor %}
-                  {% else %}
-                    None of your friends are here... tell them to sign up!
-                  {% endif %}
-        {% endif %}
-    </div>
-        
-    <div class="clear"></div>
-    
-    <div class="container_12" style="margin-top:20px;">
-        <div class="grid_12" style="text-align:center;">
-            {% if current_user %}
-                    <fb:login-button autologoutlink="true"></fb:login-button>
+        <div class="grid_12" style="margin-top:20px;">
+            {% if facetime_friends %}
+            {% for f in facetime_friends %}
+            {% if f.facetime_email %}
+            <div class="grid_10 omega greybox" style="left:20px;margin-top:10px;">
+                <div class="grid_2 alpha">
+                    <img src="{{ f.picture }}" width=50 height=50/>
+                </div>
+                <div class="grid_5" style="padding-top:16px;">
+                    <a href="{{ f.profile_url }}" style="text-decoration:none;">{{ f.name }}</a>
+                </div>
+                <div class="grid_3 omega" style="padding-top:16px;text-align:right;">
+                    <a class="button green" href="facetime://{{ f.facetime_email|escape }}">Call</a>
+                </div>
+            </div>
+            <div class="clear"></div>
             {% endif %}
-        
-            <br />
-            
+            {% endfor %}
+            {% else %}
+            None of your friends are here yet. Click the "like" button above to share Facecall!
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <div class="clear"></div>
+
+        <div class="grid_12" style="margin-top:20px;text-align:center;">
+            {% if current_user %}
+            <fb:login-button autologoutlink="true"></fb:login-button>
+            {% endif %}
+
+            <br /><br />
             <strong>Don't have FaceTime?</strong> <a href="http://itunes.apple.com/us/app/facetime/id414307850">Get FaceTime for Mac</a><br />
             <small>You'll need a mac with Snow Leopard (10.6) or an iPhone 4.</small><br />
         </div>
-        
+
         <div class="grid_12" style="margin-top:20px;text-align:center;">
             Facecall Me is Brought to you by Dollop Labs
         </div>
+
     </div>
 
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
