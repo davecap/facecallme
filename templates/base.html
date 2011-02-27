@@ -5,8 +5,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
-  <title>Facetime Me!</title>
-  <meta name="description" content="Facetime Me!">
+  <title>Facecall!</title>
+  <meta name="description" content="Facecall is Facebook + FaceTime">
   <meta name="author" content="Dollop Labs">
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -51,7 +51,7 @@
         font-size: 11px;
         font-weight: bold;
         line-height: 1;
-        padding: 5px 12px 5px 12px;
+        padding: 5px 15px 5px 15px;
         text-align: center;
         text-shadow: 0 -1px 0 #4c9021;
       }
@@ -102,8 +102,7 @@
         <br /><br />
     </div>
     
-    
-    <div class="clear"></div>    
+    <div class="clear"></div>
     
     <div class="container_12">        
         {% if current_user %}
@@ -112,20 +111,23 @@
             </div>
             <div class="grid_10 omega">
                 Hello, {{ current_user.name|escape }}<br />                    
-                <span id="facetime-email" style="{% if not current_user.facetime_email %}display:none;{% endif %}"><span id="facetime-email-text">{{ current_user.facetime_email|escape }}</span>&nbsp;<a href="#" id="update-email">Change</a></span>
+                <span id="facetime-email" style="{% if not current_user.facetime_email %}display:none;{% endif %}">Your FaceTime (Apple ID) is:<span id="facetime-email-text">{{ current_user.facetime_email|escape }}</span>&nbsp;<a href="#" id="update-email">Change</a></span>
                 <form action="POST" id="facetime-email-form" style="{% if current_user.facetime_email %}display:none;{% endif %}">
                 <input type="email" name="email" id="email" value="{{ current_user.facetime_email|escape }}" />
                 <input type="submit" id="submit" value="Save" /><span id="submit-error"></span>
                 </form>
+                <br />
+                <fb:like href="http://www.facecall.me" show_faces="false" width="200"></fb:like>
             </div>
         {% else %}
             <div style="text-align:center;">
-                <fb:login-button></fb:login-button>
+                <fb:login-button autologoutlink="true"></fb:login-button>
             </div>
         {% endif %}
     </div>
         
     <div class="clear"></div>
+    <hr />
     
     <div class="container_12" style="margin-top:20px;">
         {% if current_user %}
@@ -155,7 +157,7 @@
     <div class="container_12" style="margin-top:20px;">
         <div class="grid_12" style="text-align:center;">
             {% if current_user %}
-                    <fb:logout-button></fb:logout-button>
+                    <fb:login-button autologoutlink="true"></fb:login-button>
             {% endif %}
         
             <br />
@@ -165,7 +167,7 @@
         </div>
         
         <div class="grid_12" style="margin-top:20px;text-align:center;">
-            FaceCall Me is Brought to you by Dollop Labs
+            Facecall Me is Brought to you by Dollop Labs
         </div>
     </div>
 
