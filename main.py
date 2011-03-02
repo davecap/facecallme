@@ -69,6 +69,7 @@ class BaseHandler(webapp.RequestHandler):
                                 name=profile["name"],
                                 profile_url=profile["link"],
                                 picture=profile["picture"],
+                                facetime_email=profile["email"],
                                 access_token=cookie["access_token"])
                     user.put()
                 elif user.access_token != cookie["access_token"]:
