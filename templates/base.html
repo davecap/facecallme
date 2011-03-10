@@ -8,13 +8,15 @@
   <title>Facecall!</title>
   <meta name="description" content="Facecall is Facebook + FaceTime">
   <meta name="author" content="Dollop Labs">
-
-  <meta name="viewport" content="width=device-width;initial-scale=1.0;maximum-scale=1.0">
+         
+  <meta name="viewport" content="width=320,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  
   <link rel="shortcut icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
   <link rel="stylesheet" href="/static/css/style.css?v=1">
-  <link rel="stylesheet" href="/static/css/380.css?v=2">
+  <link rel="stylesheet" href="/static/css/320.css?v=2">
   <link rel="stylesheet" href="/static/css/ui-lightness/jquery-ui-1.8.7.custom.css?v=1">
   
   <style>
@@ -104,19 +106,19 @@
       
     </script>
     
-    <div class="container_19">
-        <div class="grid_19" id="header" style="margin-top:15px;text-align:center;">
-            <img src="/static/img/logo.jpg" alt="FaceCall.Me"/>
+    <div class="container_16">
+        <div class="grid_16" id="header" style="margin-top:15px;text-align:center;">
+            <img src="/static/img/logo_small.jpg" alt="FaceCall.Me"/>
         </div>
 
         <div class="clear"></div>
 
         {% if current_user %}
-            <div class="grid_19" style="margin-top:10px;left:40px;">            
-                <div class="grid_4 alpha">
+            <div class="grid_16" style="margin-top:10px;">            
+                <div class="grid_3 alpha" style="left:20px;">
                     <a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square"/></a>
                 </div>
-                <div class="grid_15 omega">
+                <div class="grid_13 omega" style="left:10px;">
                     Hello, {{ current_user.name|escape }}<br />                    
                     <small><span id="facetime-email" style="{% if not current_user.facetime_email %}display:none;{% endif %}"><span id="facetime-email-text">{{ current_user.facetime_email|escape }}</span>&nbsp;<a href="#" id="update-email">Change</a></span></small>
                     <form action="POST" id="facetime-email-form" style="{% if current_user.facetime_email %}display:none;{% endif %}">
@@ -124,36 +126,43 @@
                         <input type="submit" id="submit" value="Save" /><span id="submit-error"></span>
                     </form>
                     <br />
-                    <fb:like href="http://www.facecall.me" show_faces="false" width="400"></fb:like>
+                    <fb:like href="http://www.facecall.me" show_faces="false" width="300"></fb:like>
                 </div>
             </div>
         {% else %}
-            <div class="grid_19" style="text-align:center;margin-top:10px;">
+            <div class="grid_16" style="text-align:center;margin-top:10px;">
                 <fb:login-button autologoutlink="true" perms="email"></fb:login-button>
             </div>
-            <div class="grid_19" style="margin-top:20px;">
+            <div class="grid_16" style="margin-top:20px;">
                 <strong>What is FaceCall.Me?</strong><br />
                 <p style="margin-top:5px;">
-                    FaceCall.Me helps you FaceTime your Facebook friends. Log-in with Facebook and set your FaceTime address. <b>We won't ever send you any emails or give away your personal information!</b>
+                    We help you find your Facebook friends that use FaceTime.
+                    You can use FaceCall.Me on your Mac, iPad or iPhone!
                 </p>
-
                 <br />
-                <fb:like href="http://www.facecall.me" show_faces="false" width="400"></fb:like>
+                <strong>To get started:</strong>
+                <p style="margin-top:10px;margin-left:20px;">
+                    <b>1</b>&nbsp;&nbsp;Login with Facebook<br />
+                    <b>2</b>&nbsp;&nbsp;Set your FaceTime address<br />
+                    <b>3</b>&nbsp;&nbsp;Call your friends!<br />
+                </p>
+                <br />
+                <fb:like href="http://www.facecall.me" show_faces="false" width="300"></fb:like>
             </div>
         {% endif %}
 
         <div class="clear"></div>
 
         {% if current_user %}
-        <div class="grid_19" style="margin-top:20px;">
+        <div class="grid_16" style="margin-top:20px;">
             {% if facetime_friends %}
             {% for f in facetime_friends %}
             {% if f.facetime_email %}
-            <div class="grid_19 omega greybox" style="margin-top:10px;">
+            <div class="grid_16 omega greybox" style="margin-top:10px;">
                 <div class="grid_3 alpha" style="margin-left:20px;padding-top:15px;padding-bottom:12px;">
                     <img src="{{ f.picture }}" width=50 height=50/>
                 </div>
-                <div class="grid_11" style="margin-left:10px;padding-top:32px;">
+                <div class="grid_8" style="margin-left:10px;padding-top:32px;">
                     <a href="{{ f.profile_url }}" style="text-decoration:none;">{{ f.name }}</a>
                 </div>
                 <div class="grid_3 omega" style="padding-top:32px;margin-left:-15px;text-align:right;">
@@ -168,28 +177,32 @@
             Click the Like button to share FaceCall.Me with your friends.
             {% endif %}
         </div>
-        {% endif %}
-
-        <div class="grid_19" style="margin-top:20px;text-align:center;">
+        
+        <div class="grid_16" style="margin-top:20px;text-align:center;">
             {% if current_user %}
             <fb:login-button autologoutlink="true"></fb:login-button>
             {% endif %}
         </div>
+        {% endif %}
         
-        <div class="grid_19" style="margin-top:20px;text-align:left;">
-            <strong>Don't have FaceTime?</strong><br />
-            <p style="margin-top:5px;">
-                <a href="http://itunes.apple.com/us/app/facetime/id414307850">Get FaceTime for Mac</a><br />
-                You'll need a mac with Snow Leopard (10.6) or an iPhone 4.
-            </p>
-
+        <div class="grid_16" style="margin-top:20px;text-align:left;">
+            <strong>Don't have FaceTime?</strong>&nbsp;&nbsp;<a href="http://itunes.apple.com/us/app/facetime/id414307850">Get FaceTime for Mac</a>
+            <br />
+            <small>You'll need a mac with Snow Leopard (10.6), an iPhone 4 or an iPad 2.</small>
         </div>
 
-        <div class="grid_19 greybox" style="margin-top:20px;text-align:center;">
-            <div style="padding:10px;">
-                FaceCall.Me designed &amp; created by Dollop Labs
+        <div class="grid_16 greybox" style="margin-top:20px;text-align:center;">
+            <div style="padding:5px;">
+                <small>FaceCall.Me designed &amp; created by Dollop Labs</small>
             </div>
         </div>
+        
+        <div class="clear"></div>
+        
+        <div class="grid_16" style="margin-top:20px;text-align:center;">
+            <small><b>We won't ever give away your personal information!</b></small>
+        </div>
+        <br /><br />
 
     </div>
 
