@@ -64,12 +64,16 @@ class BaseHandler(webapp.RequestHandler):
                 if not user:
                     graph = facebook.GraphAPI(cookie["access_token"])
                     profile = graph.get_object("me", fields='id,name,link,picture')
+                    if "email" in profile:
+                        default_email = profile["email"]
+                    else:
+                        default_email = ''
                     user = User(key_name=str(profile["id"]),
                                 id=str(profile["id"]),
                                 name=profile["name"],
                                 profile_url=profile["link"],
                                 picture=profile["picture"],
-                                facetime_email=profile["email"],
+                                facetime_email=default_email,
                                 access_token=cookie["access_token"])
                     user.put()
                 elif user.access_token != cookie["access_token"]:
