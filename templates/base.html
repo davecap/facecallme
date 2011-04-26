@@ -15,7 +15,7 @@
   <link rel="shortcut icon" href="/favicon.ico">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 
-  <link rel="stylesheet" href="/static/css/style.css?v=1">
+  <link rel="stylesheet" href="static/css/style.css?v=1">
   <link rel="stylesheet" href="/static/css/320.css?v=2">
   <link rel="stylesheet" href="/static/css/ui-lightness/jquery-ui-1.8.7.custom.css?v=1">
   
@@ -112,20 +112,21 @@
         </div>
 
         <div class="clear"></div>
-
         {% if current_user %}
             <div class="grid_16" style="margin-top:10px;">            
                 <div class="grid_3 alpha" style="left:20px;">
                     <a href="{{ current_user.profile_url }}"><img src="http://graph.facebook.com/{{ current_user.id }}/picture?type=square"/></a>
                 </div>
-                <div class="grid_10 omega" style="left:30px;">
+                <div class="grid_11 omega" style="left:30px;">
                     Hello, {{ current_user.name|escape }}<br />                    
                     <small><span id="facetime-email" style="{% if not current_user.facetime_email %}display:none;{% endif %}"><span id="facetime-email-text">{{ current_user.facetime_email|escape }}</span>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="#" id="update-email">Edit</a></span></small>
                     <form action="POST" id="facetime-email-form" style="{% if current_user.facetime_email %}display:none;{% endif %}">
-                        <input type="email" name="email" id="email" value="{{ current_user.facetime_email|escape }}" />
-                        <input type="submit" id="submit" value="Save" /><span id="submit-error"></span>
+                        <div style="margin-top:5px;" class="warning">Please enter your FaceTime email so your friends can call you:<br />
+                        <input style="margin-top:5px;" type="email" name="email" id="email" placeholder="FaceTime Email Address" value="{{ current_user.facetime_email|escape }}" />
+                        <button style="margin-top: 10px;width: 90px;" class="small blue awesome" type="submit" id="submit">Save</button><span id="submit-error"></span></div>
                     </form>
                 </div>
+                
             </div>
         {% else %}
             <div class="grid_16" style="text-align:center;margin-top:10px;">
@@ -234,7 +235,7 @@
         $('#submit').click(function () {		
             var email = $('input[name=email]');
             if (!validateEmail(email.val())) {
-                $('#submit-error').html('Invalid email');
+                $('#submit-error').html('&nbsp;Invalid email');
                 return false;
             }
         
